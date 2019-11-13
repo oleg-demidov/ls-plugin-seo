@@ -1,0 +1,15 @@
+{
+    "name": "seo",
+    "version": "1.0.0",
+    "dependencies": {
+        
+    },
+    "templates": {
+        "seo": "seo.tpl",
+        "autocomplete": "autocomplete.tpl",
+        "filter": "filter.tpl"
+    },
+    "scripts": {
+        "seo":"js/seo.js"
+    }
+}
