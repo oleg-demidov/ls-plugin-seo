@@ -21,6 +21,8 @@
 
 class PluginSeo_ModuleSeo extends ModuleORM
 {
+    protected $aVars = [];
+
     public function Init() {
         parent::Init();
     }
@@ -38,7 +40,7 @@ class PluginSeo_ModuleSeo extends ModuleORM
         array $aVars
             ) {
         
-        $rule = Engine::GetEntity('PluginSeo_Seo_Seo');
+        $rule = Engine::GetEntity('PluginSeo_Seo_Rule');
         
         $rule->setName($sName);
         $rule->setVars($aVars);
@@ -46,5 +48,24 @@ class PluginSeo_ModuleSeo extends ModuleORM
         
         $rule->Save();
         
+    }
+    
+    public function SetVars(array $aVars) {
+        $this->aVars = $aVars;
+    }
+    
+    public function SetVar($key, $var) {
+        $this->aVars[$key] = $var;
+    }
+    
+    public function GetVars() {
+        return $this->aVars;
+    }
+    
+    public function GetVar($key) {
+        if(isset($this->aVars[$key])){
+            return $this->aVars[$key];
+        }
+        return null;
     }
 }

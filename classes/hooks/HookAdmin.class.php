@@ -19,7 +19,7 @@ class PluginSeo_HookAdmin extends Hook {
                 ->SetCaption('SEO')
                 ->SetName('seo')
                 ->SetUrl('plugin/seo')
-                ->setIcon('th-list');
+                ->setIcon('chart-line');
         
         $oSection
                 ->AddItem(Engine::GetEntity('PluginAdmin_Ui_MenuItem')

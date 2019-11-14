@@ -22,6 +22,8 @@
 class PluginSeo_ModuleSeo_EntityRule extends EntityORM
 {
 
-   
+    protected $aJsonFields = [
+        'vars'
+    ];
    
 }
