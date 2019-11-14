@@ -25,5 +25,18 @@ class PluginSeo_ModuleSeo_EntityRule extends EntityORM
     protected $aJsonFields = [
         'vars'
     ];
+    
+    protected function getTagText(string $sTag)
+    {
+        $aVars = $this->PluginSeo_Seo_GetVars($this->getVars());
+        
+        $sText = $this->_getDataOne($sTag);
+        
+        foreach ($aVars as $key => $value) {
+            $sText = str_replace('\{$' . $key . '\}', $value, $sText);
+        }
+        return $sText;
+        
+    }
    
 }

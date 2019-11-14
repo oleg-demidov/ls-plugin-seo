@@ -22,8 +22,6 @@ return [
     ],
     'no_results_text' => 'Нет результатов',
     'validate' => [
-        'not_fond_country' => 'Не найдена страна с ID "%%id%%"',
-        'not_fond_region' => 'Не найден регион',
-        'not_fond_city' => 'Не найден город'
+        'not_fond_seo' => 'Необходимо заполнить поля с мета тегами'
     ]
 ];

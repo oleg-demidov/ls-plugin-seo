@@ -34,7 +34,6 @@ class PluginSeo_BlockSeo extends Block
     {
         $sEntity = $this->GetParam('entity');
         $oTarget = $this->GetParam('target');
-        $seo = $this->GetParam('seo');
 
         if (!$oTarget) {
             $oTarget = Engine::GetEntity($sEntity);
@@ -47,32 +46,15 @@ class PluginSeo_BlockSeo extends Block
              */
             if ($oBehavior instanceof PluginSeo_ModuleSeo_BehaviorEntity) {
                 
-                $oSeoTarget = $this->PluginSeo_Seo_GetTargetByFilter([
+                $data = $this->PluginSeo_Seo_GetDataByFilter([
                     'target_type' => $oBehavior->getParam('target_type'),
                     'target_id' => $oTarget->getId()
-                ]);                
+                ]);                     
                 
-                $this->Viewer_Assign('oSeoTarget', $oSeoTarget);      
+                $this->Viewer_Assign('data', $data);      
+                $this->Viewer_Assign('behavior', $oBehavior);      
                 
-                $oBehavior->setParam('label', $this->GetParam('label', $oBehavior->getParam('label')));
-                $oBehavior->setParam('placeholder', $this->GetParam('placeholder', $oBehavior->getParam('placeholder')));
-                        
-                $this->Viewer_Assign('oBehaviorSeo', $oBehavior); 
-                
-                $this->Viewer_Assign('seo', $seo);
-                
-//                $this->Viewer_Assign('aCountries', $this->PluginSeo_Seo_GetCountryItemsByFilter([
-//                    'id' => 149
-//                ]));
-                
-//                if ($oSeoTarget and $oSeoTarget->getCountry()) 
-//                {
-//                    $this->Viewer_Assign('aRegions', $this->PluginSeo_Seo_GetRegionItemsByFilter([
-//                        'country_id' => 149//$oSeoTarget->getCountry()->getId()
-//                    ]));
-//                }
-                
-                $this->SetTemplate('component@seo:seo.autocomplete');
+                $this->SetTemplate('component@seo:seo');
 
             }
         }

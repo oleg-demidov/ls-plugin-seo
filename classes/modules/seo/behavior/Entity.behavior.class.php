@@ -35,12 +35,9 @@ class PluginSeo_ModuleSeo_BehaviorEntity extends Behavior
     protected $aParams = array(
         'target_type'   => '',
         'field'         => 'seo',
-        'require'       => true,
-        'label'         => 'plugin.seo.field.city.label',
-        'placeholder'   => ''
+        'required'      => false,
+        'validate'      => true
     );
-    
-    protected $aSeo;
     
     protected $target;
     /**
@@ -93,35 +90,13 @@ class PluginSeo_ModuleSeo_BehaviorEntity extends Behavior
    
     public function ValidateSeoCheck($aSeo)
     {
-        $this->aSeo = $aSeo;
         return $this->PluginSeo_Seo_ValidateEntitySeo($this->oObject, $this, $aSeo);
     }
     
-    public function getSeoForSave($sKey = null) {
-        if($sKey){
-            if (!isset($this->aSeo[$sKey])) {
-                return null;
-            }
-            return $this->aSeo[$sKey];
-        }
-        return $this->aSeo;
-    }
-
-    
-    public function get($sKey = null)
-    {
-        $oTarget = $this->getTarget();
+ 
+    public function getData() {
         
-        if($sKey and $oTarget){
-            return $oTarget->_getDataOne($sKey);
-        }
-        
-        return $oTarget;
-    }
-    
-    public function getTarget() {
-        
-        return $this->PluginSeo_Seo_GetEntityTarget($this->oObject, $this->getParam('target_type'));
+        return $this->PluginSeo_Seo_GetEntityData($this->oObject, $this->getParam('target_type'));
         
     }
 
