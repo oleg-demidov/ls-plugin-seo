@@ -96,7 +96,7 @@ class PluginSeo_ModuleSeo extends ModuleORM
         return $data;
     }
     
-    public function RewriteFilter(array $aFilter, Behavior $behavior,string $sEntityFull) {
+    public function RewriteFilter(array $aFilter, Behavior $behavior, $sEntityFull) {
 
         $oEntitySample = Engine::GetEntity($sEntityFull);
 
@@ -231,7 +231,7 @@ class PluginSeo_ModuleSeo extends ModuleORM
         return $oData->Save();
     }
     
-    public function ReplaceVars(string $sText ) 
+    public function ReplaceVars( $sText ) 
     {
         $aVars = $this->GetVars();
         
