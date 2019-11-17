@@ -5,11 +5,9 @@
         
     },
     "templates": {
-        "seo": "seo.tpl",
-        "autocomplete": "autocomplete.tpl",
-        "filter": "filter.tpl"
+        "seo": "seo.tpl"
     },
     "scripts": {
-        "seo":"js/seo.js"
+        "field":"js/field.js"
     }
 }

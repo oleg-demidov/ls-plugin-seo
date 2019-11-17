@@ -32,18 +32,13 @@ class PluginSeo_ModuleSeo extends ModuleORM
      * 
      * @param string $sName   Имя Правила для отображения в списке
      * @param string $sEventName Имя Эвента
-     * @param array $aVars  Переменные доступные для правила {$var}
      */
-    public function AddRule(
-        string $sName,
-        string $sEventName,
-        array $aVars
-            ) {
+    public function AddRule( string $sName, string $sEventName ) 
+    {
         
         $rule = Engine::GetEntity('PluginSeo_Seo_Rule');
         
         $rule->setName($sName);
-        $rule->setVars($aVars);
         $rule->setEvent($sEventName);
         
         $rule->Save();
@@ -58,16 +53,7 @@ class PluginSeo_ModuleSeo extends ModuleORM
         $this->aVars[$key] = $var;
     }
     
-    public function GetVars(array $aFilter = []) {
-        if($aFilter){
-            $aReturn = array();
-            foreach ($aFilter as $key) {
-                if (array_key_exists($key, $this->aVars)) {
-                    $aReturn[$key] = $this->aVars[$key];
-                }
-            }
-            return $aReturn;
-        }
+    public function GetVars() {
         return $this->aVars;
     }
     
@@ -80,12 +66,21 @@ class PluginSeo_ModuleSeo extends ModuleORM
    
     public function ValidateEntitySeo(Entity $entity, Behavior $behavior, $aSeo) {
 
-        
         if($behavior->getParam('required') and !$aSeo){
             return $this->Lang_Get('plugin.seo.validate.not_fond_seo');
         }
         
-        $entity->_setData(['_seo_data' => $aSeo]);
+        if(!isset($aSeo['keys']) or !isset($aSeo['vals'])){
+            return $this->Lang_Get('plugin.seo.validate.not_fond_seo');
+        }
+        
+        $aSeoVars = [];
+        foreach ($aSeo['keys'] as $key => $value) 
+        {
+            $aSeoVars[$value] = $aSeo['vals'][$key];
+        }
+        
+        $entity->_setData(['_seo_for_save' => $aSeoVars]);
         
         return true;
     }
@@ -133,10 +128,14 @@ class PluginSeo_ModuleSeo extends ModuleORM
         return $aFilter;
     }
     
-    public function RewriteGetItemsByFilter(array $aResult, Behavior $behavior, array $aFilter)
+    public function RewriteGetItemsByFilter( $aResult, Behavior $behavior, array $aFilter)
     {
         if (!$aResult) {
             return;
+        }
+        
+        if(!is_array($aResult)){
+            $aResult = [$aResult];
         }
         /**
          * Список на входе может быть двух видов:
@@ -160,11 +159,12 @@ class PluginSeo_ModuleSeo extends ModuleORM
             return;
         }
         /**
-         * Проверяем необходимость цеплять категории
+         * Цепляем SEO переменные к объектам а так же загружаем их в модуль SEO
          */
-        if (isset($aFilter['#with']["#seo"])) {
+        if (isset($aFilter['#with']) and is_array($aFilter['#with']) and in_array('#seo',$aFilter['#with'])) {       
             $this->AttachSeoDataForTargetItems($aEntitiesWork, $behavior->getParam('target_type'));
         }
+        
     }
     
     public function AttachSeoDataForTargetItems($aEntityItems, $sTargetType)
@@ -186,6 +186,10 @@ class PluginSeo_ModuleSeo extends ModuleORM
             '#index-from-primary'
         ]);
         
+        foreach ($aSeo as $data) 
+        {
+            $this->SetVars(array_merge($this->GetVars(),$data->getVars()));
+        }
         
         /**
          * Собираем данные
@@ -218,8 +222,8 @@ class PluginSeo_ModuleSeo extends ModuleORM
         if (!$oData) {
             $oData = Engine::GetEntity('PluginSeo_Seo_Data');
         }
-                        
-        $oData->_setData($oEntity->getSeo());       
+
+        $oData->setVars($oEntity->_getDataOne('_seo_for_save'));       
         
         $oData->setTargetId($oEntity->getId());
         $oData->setTargetType($oBehavior->getParam('target_type'));
@@ -227,7 +231,16 @@ class PluginSeo_ModuleSeo extends ModuleORM
         return $oData->Save();
     }
     
-    public function Get($param) {
+    public function ReplaceVars(string $sText ) 
+    {
+        $aVars = $this->GetVars();
         
+        foreach ($aVars as $key => $value) {     
+            $sText = str_replace('{$'.$key.'}', $value, $sText);
+        } 
+        
+        $sText = preg_replace('/\{\$\w{1,30}\}/i', '', $sText);
+        
+        return $sText;
     }
 }

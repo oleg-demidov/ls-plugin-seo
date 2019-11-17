@@ -22,8 +22,10 @@ class PluginSeo_HookEvent extends Hook {
         if(!$rule){
             return;
         }
-        
+                
         $this->Viewer_SetHtmlTitle($rule->getTitle());
+        $this->Viewer_SetHtmlDescription($rule->getDescription());
+        $this->Viewer_SetHtmlKeywords($rule->getKeywords());
         
         
     }

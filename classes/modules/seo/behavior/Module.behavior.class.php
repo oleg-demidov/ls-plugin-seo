@@ -46,6 +46,10 @@ class PluginSeo_ModuleSeo_BehaviorModule extends Behavior
             'CallbackGetItemsByFilterAfter',
             1000
         ),
+        'module_orm_GetByFilter_after'  => array(
+            'CallbackGetItemsByFilterAfter',
+            1000
+        ),
         'module_orm_GetItemsByFilter_before' => array(
             'CallbackGetItemsByFilterBefore',
             1000

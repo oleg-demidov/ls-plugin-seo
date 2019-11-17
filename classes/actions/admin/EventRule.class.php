@@ -64,6 +64,8 @@ class PluginSeo_ActionAdmin_EventRule extends Event
             }  
                       
         }
+        
+        $this->Viewer_Assign('aVars', $aVars);
        
         $this->Viewer_Assign('rule', $rule);
     }

@@ -26,17 +26,21 @@ class PluginSeo_ModuleSeo_EntityRule extends EntityORM
         'vars'
     ];
     
-    protected function getTagText(string $sTag)
-    {
-        $aVars = $this->PluginSeo_Seo_GetVars($this->getVars());
-        
-        $sText = $this->_getDataOne($sTag);
-        
-        foreach ($aVars as $key => $value) {
-            $sText = str_replace('\{$' . $key . '\}', $value, $sText);
-        }
-        return $sText;
-        
+    
+    public function getTitle() {
+        return $this->PluginSeo_Seo_ReplaceVars(parent::getTitle());
+    }
+    
+    public function getH1() {
+        return $this->PluginSeo_Seo_ReplaceVars(parent::getH1());
+    }
+    
+    public function getDescription() {
+        return $this->PluginSeo_Seo_ReplaceVars(parent::getDescription());
+    }
+    
+    public function getKeywords() {
+        return $this->PluginSeo_Seo_ReplaceVars(parent::getKeywords());
     }
    
 }

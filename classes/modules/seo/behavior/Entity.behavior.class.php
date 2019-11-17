@@ -60,6 +60,9 @@ class PluginSeo_ModuleSeo_BehaviorEntity extends Behavior
     public function CallbackValidateAfter($aParams)
     {
         if ($aParams['bResult']) {
+            if(!$this->getParam('validate')){
+                return;
+            }
             $aFields = $aParams['aFields'];
             if (is_null($aFields) or in_array('seo', $aFields)) {
                 $oValidator = $this->Validate_CreateValidator('seo_check', $this, $this->getParam('field'));

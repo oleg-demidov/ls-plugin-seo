@@ -22,5 +22,16 @@
 class PluginSeo_ModuleSeo_EntityData extends EntityORM
 {
 
+    protected $aJsonFields = [
+        'vars'
+    ];
+    
+    public function getVars() {
+        if (!parent::getVars()) {
+            return [];
+        }
+        
+        return parent::getVars();
+    }
     
 }

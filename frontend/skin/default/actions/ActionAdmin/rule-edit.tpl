@@ -15,8 +15,8 @@
         value       = $rule->getEvent()
     }
         
-    Список переменных: <br>
-    {foreach $rule->getVars() as $var}
+    Список возможных переменных: <br>
+    {foreach $aVars as $var}
         {ldelim}${$var}{rdelim}<br>
     {/foreach}
 
