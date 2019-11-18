@@ -64,10 +64,26 @@ class PluginSeo_ActionAdmin_EventRule extends Event
             }  
                       
         }
-        
-        $this->Viewer_Assign('aVars', $aVars);
+               
+        $this->Viewer_Assign('aVars', $this->PluginSeo_Seo_GetAllTargetVars());
        
         $this->Viewer_Assign('rule', $rule);
+    }
+    
+    public function EventRemove() {
+        $this->Security_ValidateSendForm();
+        
+        $rule = $this->PluginSeo_Seo_GetRuleById( $this->GetParam(0) );
+        
+        if(!$rule){
+            Router::LocationAction('admin/plugin/seo/rules');
+        }
+        
+        if($rule->Delete()){
+            $this->Message_AddNoticeSingle($this->Lang_Get('Правило удалено'));
+        }
+        
+        return $this->EventList();
     }
     
 }

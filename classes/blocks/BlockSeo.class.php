@@ -49,7 +49,16 @@ class PluginSeo_BlockSeo extends Block
                 $data = $this->PluginSeo_Seo_GetDataByFilter([
                     'target_type' => $oBehavior->getParam('target_type'),
                     'target_id' => $oTarget->getId()
-                ]);                     
+                ]);
+                
+                $aVars = $this->PluginSeo_Seo_GetAllTargetVars($oBehavior->getParam('target_type'));
+                $aVars = array_fill_keys($aVars, null);
+                
+                if(!$data){
+                    $data = Engine::GetEntity('PluginSeo_Seo_Data');
+                }
+                
+                $data->setVars(array_merge($aVars, $data->getVars()));
                 
                 $this->Viewer_Assign('data', $data);      
                 $this->Viewer_Assign('behavior', $oBehavior);      

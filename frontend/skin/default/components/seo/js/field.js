@@ -19,6 +19,10 @@
             this._super();
             
             this._on(this.elements.btnAdd, {click: "add"});
+            
+            this.elements.content.children().find('[data-btn-clear]').on('click', function(){
+                $(this).closest('[data-seo-field]').remove();
+            })
         },
         
         add: function(event)

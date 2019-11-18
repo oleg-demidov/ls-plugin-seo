@@ -243,4 +243,22 @@ class PluginSeo_ModuleSeo extends ModuleORM
         
         return $sText;
     }
+    
+    public function GetAllTargetVars($sTargetType = null) {
+        $aFilter = [];
+        
+        if ($sTargetType) {
+            $aFilter['target_type'] = $sTargetType;
+        }
+        
+        $aData = $this->PluginSeo_Seo_GetDataItemsByFilter($aFilter);
+        
+        $aVars = [];
+        
+        foreach ($aData as $data){
+            $aVars = array_merge($aVars, $data->getVars());
+        }
+        
+        return array_keys($aVars);
+    }
 }

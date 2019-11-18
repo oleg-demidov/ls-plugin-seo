@@ -4,22 +4,23 @@
 <form method="POST" action="{Router::GetPathWebCurrent() }"> 
     
     {component "bs-form.text"
-        attributes  = ['disabled'    =>  true]
         label       = "Название:"
         value       = $rule->getName()
+        name        = 'rule[name]'
     }
     
     {component "bs-form.text"
-        attributes  = ['disabled'    =>  true]
         label       = "Имя эвента:"
         value       = $rule->getEvent()
+        name        = 'rule[event]'
     }
         
     Список возможных переменных: <br>
-    {foreach $aVars as $var}
-        {ldelim}${$var}{rdelim}<br>
-    {/foreach}
-
+    <strong>
+        {foreach $aVars as $var}
+            {ldelim}${$var}{rdelim}&nbsp;
+        {/foreach}
+    </strong><br>
     {component "bs-form.textarea"
         label       = "Title:"
         value       = $rule->getTitle()

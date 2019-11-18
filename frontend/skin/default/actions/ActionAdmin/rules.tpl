@@ -8,6 +8,10 @@
 
 {block 'page_content'}
     
+    {component "bs-button" 
+        text    = {lang 'common.add'} 
+        url     = {router page="admin/plugin/seo/add"}
+        bmods   = "primary"}
         
     <table class="ls-table">
         <thead>
@@ -35,6 +39,8 @@
                                         
                     <td class="ls-table-cell-actions">
                         <a href="{router page="admin/plugin/seo/edit/{$rule->getId()}"}" class="fa fa-edit" title="{$aLang.plugin.admin.edit}"></a>
+                        <a href="{router page="admin/plugin/seo/remove/{$rule->getId()}?security_ls_key={$LIVESTREET_SECURITY_KEY}"}" class="fa fa-trash-o js-confirm-remove" title="{$aLang.plugin.admin.delete}"></a>
+
                     </td>
                 </tr>
             {/foreach}

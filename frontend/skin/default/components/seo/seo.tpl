@@ -2,8 +2,8 @@
 <div data-seo-field>
     
     
-    {function name="var_item" key="" val="" disabled=true}
-        <div class="input-group mb-2" data-tmp-var>
+    {function name="var_item" key="" val="" disabled=true tmp=false}
+        <div class="input-group mb-2" data-seo-field {if $tmp}data-tmp-var{/if}>
             <input type="text" class="form-control" name="{$behavior->getParam('field')}[keys][]" value="{$key}" placeholder="Имя переменной" 
                    {if $disabled}disabled{/if}>
             <div class="input-group-prepend" style=" height: 31px;">
@@ -28,7 +28,7 @@
     </div>
     
     <div class="d-none">
-        {var_item}
+        {var_item tmp=true}
     </div>
     
     {component "bs-button" 
