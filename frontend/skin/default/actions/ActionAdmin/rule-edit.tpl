@@ -23,22 +23,22 @@
     </strong><br>
     {component "bs-form.textarea"
         label       = "Title:"
-        value       = $rule->getTitle()
+        value       = $rule->_getDataOne('title')
         name        = 'rule[title]'
     }
     {component "bs-form.textarea"
         label       = "Description:"
-        value       = $rule->getDescription()
+        value       = $rule->_getDataOne('description')
         name        = 'rule[description]'
     }
     {component "bs-form.textarea"
         label       = "Keywords:"
-        value       = $rule->getKeywords()
+        value       = $rule->_getDataOne('keywords')
         name        = 'rule[keywords]'
     }
     {component "bs-form.textarea"
         label       = "H1:"
-        value       = $rule->getH1()
+        value       = $rule->_getDataOne('h1')
         name        = 'rule[h1]'
     }
   
